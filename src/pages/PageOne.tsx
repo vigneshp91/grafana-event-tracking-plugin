@@ -1,7 +1,9 @@
 import React,{useEffect} from 'react';
 
-import { getBackendSrv } from '@grafana/runtime';
+import { getBackendSrv, config } from '@grafana/runtime';
 import { lastValueFrom } from 'rxjs';
+const user = config.bootData.user;
+
 
 const sendEvent = async () => {
   const res = await lastValueFrom(getBackendSrv().fetch({
@@ -10,6 +12,7 @@ const sendEvent = async () => {
     data: {
       action: 'button_click',
       time: new Date(),
+      user: user ? user.login : 'anonymous',
     },
   }));
 
